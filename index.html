@@ -1,0 +1,382 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Qué lindos eran tus ojos</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Italiana&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&display=swap">
+<style>
+:root{
+  /* Un escritorio de noche con sobres lacrados; cada carta se abre al terminar la anterior. */
+  --night:#16121f; --dusk:#2d2243; --paper:#efe9ed; --ink:#2c2236; --ink-soft:#6f6179;
+  --rose:#a8445f; --wax:#8e2f4a; --glow:#e8b78f;
+  --f-display:'Italiana','Cormorant Garamond',Georgia,serif;
+  --f-body:'Spectral',Georgia,'Times New Roman',serif;
+  --f-hand:'Caveat','Segoe Script','Bradley Hand',cursive;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--night)}
+body{
+  background:var(--night) radial-gradient(ellipse at 50% 20%,var(--dusk) 0%,var(--night) 75%) fixed;
+  color:var(--paper);font-family:var(--f-body);min-height:100svh;
+  padding-block:34px 70px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  overflow-x:hidden;
+}
+#fx{position:fixed;inset:0;width:100%;height:100%;z-index:20;pointer-events:none}
+
+.top{text-align:center;margin:0 auto 44px;max-width:420px}
+.kick{margin:0;font-family:var(--f-hand);font-size:1.4rem;color:var(--glow);letter-spacing:.04em}
+.top h1{margin:.1em 0 .35em;font-family:var(--f-display);font-weight:400;font-size:clamp(2rem,9vw,2.8rem);line-height:1.1;text-wrap:balance}
+.sub{margin:0;font-style:italic;font-weight:300;color:rgba(239,233,237,.72);transition:opacity .8s;min-height:1.5em}
+.sub.off{opacity:0}
+
+.desk{display:flex;flex-direction:column;gap:40px;align-items:center;width:100%;max-width:420px;margin:0 auto}
+
+/* sobre */
+.env{
+  --tone:#d8ced7;--tone2:#c4b8c3;--tilt:-1.5deg;
+  position:relative;width:min(100%,380px);aspect-ratio:3/2;transform:rotate(var(--tilt));
+  animation:drop .9s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i)*.12s);
+  transition:transform .5s ease,filter .5s;
+}
+@keyframes drop{from{opacity:0;transform:translateY(26px) rotate(var(--tilt))}to{opacity:1;transform:rotate(var(--tilt))}}
+.env:hover:not(.locked){transform:translateY(-4px) rotate(var(--tilt))}
+.env.locked{filter:saturate(.45) brightness(.78)}
+.body{position:absolute;inset:0;perspective:900px;filter:drop-shadow(0 14px 18px rgba(0,0,0,.45))}
+.back{position:absolute;inset:0;background:var(--tone2);border-radius:3px}
+.peek{position:absolute;left:5%;right:5%;top:7%;bottom:6%;background:var(--paper);border-radius:2px;z-index:1;transition:transform .8s cubic-bezier(.3,.7,.2,1)}
+.peek::before{content:"";position:absolute;left:12%;right:12%;top:18%;height:1px;background:rgba(44,34,54,.18);box-shadow:0 9px 0 rgba(44,34,54,.14),0 18px 0 rgba(44,34,54,.14)}
+.env.open .peek{transform:translateY(-34%)}
+.front{
+  position:absolute;inset:0;z-index:2;background:var(--tone);border-radius:3px;
+  clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%);
+}
+.front::before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(to top right,transparent calc(50% - .6px),rgba(60,30,70,.16) 50%,transparent calc(50% + .6px)) 0 100%/50% 55% no-repeat,
+    linear-gradient(to top left,transparent calc(50% - .6px),rgba(60,30,70,.16) 50%,transparent calc(50% + .6px)) 100% 100%/50% 55% no-repeat;
+}
+.label{position:absolute;left:0;right:0;bottom:10%;z-index:3;text-align:center;color:var(--ink);pointer-events:none}
+.label small{display:block;font-family:var(--f-hand);font-size:1.15rem;color:var(--rose);line-height:1}
+.label b{display:block;font-family:var(--f-hand);font-weight:600;font-size:1.65rem;line-height:1.1}
+.post{position:absolute;right:6%;top:9%;width:13%;aspect-ratio:3/4;z-index:3;border:2px dotted rgba(60,30,70,.35);background:rgba(255,255,255,.35);display:grid;place-items:center;color:var(--rose);pointer-events:none}
+.post svg{width:70%}
+.flap{
+  position:absolute;left:0;right:0;top:0;height:55%;z-index:3;transform-origin:top;
+  background:linear-gradient(180deg,var(--tone2),var(--tone));clip-path:polygon(0 0,100% 0,50% 100%);
+  transition:transform .7s cubic-bezier(.5,.1,.3,1),z-index 0s .3s;
+}
+.env.open .flap{transform:rotateX(180deg);z-index:0}
+
+.seal{position:absolute;left:50%;top:55%;width:15%;min-width:44px;aspect-ratio:1;transform:translate(-50%,-50%);border:0;padding:0;background:none;cursor:pointer;z-index:5;border-radius:50%}
+.seal:focus-visible{outline:2px solid var(--glow);outline-offset:4px}
+.seal span{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 35% 30%,#bb4d6b,var(--wax) 70%);box-shadow:0 3px 6px rgba(0,0,0,.4),inset 0 0 0 3px rgba(255,255,255,.08);transition:transform .7s ease,opacity .7s ease}
+.seal .l{clip-path:polygon(0 0,54% 0,46% 40%,56% 70%,48% 100%,0 100%)}
+.seal .r{clip-path:polygon(54% 0,100% 0,100% 100%,48% 100%,56% 70%,46% 40%)}
+.seal svg{position:absolute;inset:24%;width:52%;color:rgba(255,255,255,.4);transition:opacity .3s;pointer-events:none}
+.seal svg .lid{animation:none}
+.env.cracked .seal .l{transform:translate(-50%,60%) rotate(-26deg);opacity:0}
+.env.cracked .seal .r{transform:translate(50%,70%) rotate(28deg);opacity:0}
+.env.cracked .seal svg{opacity:0}
+.env.locked .seal{cursor:not-allowed}
+.env.locked .seal span{background:radial-gradient(circle at 35% 30%,#7a6f84,#4a4256 70%)}
+.env.next .seal span{animation:pulse 2.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 3px 6px rgba(0,0,0,.4),0 0 0 0 rgba(232,183,143,0)}50%{box-shadow:0 3px 6px rgba(0,0,0,.4),0 0 22px 6px rgba(232,183,143,.55)}}
+.env.shake{animation:shake .45s}
+@keyframes shake{0%,100%{transform:rotate(var(--tilt))}25%{transform:translateX(-6px) rotate(var(--tilt))}75%{transform:translateX(6px) rotate(var(--tilt))}}
+.stamp{position:absolute;left:8%;top:12%;z-index:4;width:22%;aspect-ratio:1;border:2px solid var(--rose);border-radius:50%;display:grid;place-items:center;font-family:var(--f-hand);font-weight:600;color:var(--rose);font-size:1.05rem;transform:rotate(-14deg) scale(1.6);opacity:0;pointer-events:none;transition:opacity .6s,transform .6s}
+.env.read .stamp{opacity:.8;transform:rotate(-14deg) scale(1)}
+.env.read .seal{pointer-events:none;opacity:0}
+.env.read .flap{pointer-events:none}
+
+#toast{position:fixed;left:50%;bottom:calc(26px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);z-index:40;background:rgba(236,230,234,.95);color:var(--ink);padding:.55em 1.1em;border-radius:99px;font-family:var(--f-hand);font-size:1.3rem;opacity:0;pointer-events:none;transition:opacity .4s,transform .4s;white-space:nowrap}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* lectura */
+.reader{position:fixed;inset:0;z-index:10;background:rgba(14,10,22,.92);opacity:0;transition:opacity .5s ease}
+.reader.show{opacity:1}
+.back-btn{
+  position:fixed;z-index:30;top:calc(12px + env(safe-area-inset-top,0px));left:max(14px,env(safe-area-inset-left,0px));
+  font:inherit;font-family:var(--f-hand);font-size:1.25rem;color:var(--paper);background:rgba(22,18,31,.78);
+  border:1px solid rgba(239,233,237,.25);border-radius:99px;padding:.15em .9em .2em;cursor:pointer;
+}
+.back-btn:hover{border-color:var(--glow)}
+.back-btn:focus-visible,.done:focus-visible{outline:2px solid var(--glow);outline-offset:3px}
+.scroller{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px))}
+.sheet{
+  position:relative;width:min(100%,580px);margin:62px auto calc(50px + env(safe-area-inset-bottom,0px));
+  padding:clamp(34px,10vw,64px) clamp(24px,8vw,58px) clamp(34px,9vw,52px);
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .3  0 0 0 0 .2  0 0 0 0 .35  0 0 0 .07 0'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>"),
+    var(--paper);
+  color:var(--ink);border-radius:3px;box-shadow:0 30px 60px -20px rgba(0,0,0,.75);
+  opacity:0;transform:translateY(60px) rotate(-1deg) scale(.96);transition:opacity .7s ease .1s,transform .9s cubic-bezier(.2,.7,.2,1) .1s;
+}
+.reader.show .sheet{opacity:1;transform:none}
+.hd{margin-bottom:1.8em}
+.hd small{display:block;font-family:var(--f-hand);font-size:1.5rem;color:var(--rose);line-height:1}
+.hd h2{margin:.1em 0 0;font-family:var(--f-display);font-weight:400;font-size:clamp(2rem,8vw,2.6rem);line-height:1.1;text-wrap:balance}
+.p{margin:0 0 1.3em;font-size:clamp(17px,4.5vw,20px);line-height:1.8;text-wrap:pretty}
+.lead{font-size:clamp(20px,5.6vw,25px);font-style:italic;font-weight:300;line-height:1.5;text-align:center;padding-bottom:1.1em;margin-bottom:1.5em;border-bottom:1px solid rgba(168,68,95,.35)}
+.echo{font-size:clamp(22px,6vw,28px);font-style:italic;color:var(--rose);text-align:center;margin:1.4em 0 .4em}
+.s{opacity:0;filter:blur(3px);transition:opacity 1.1s ease,filter 1.1s ease;transition-delay:var(--d,0s)}
+.s.in{opacity:1;filter:none}
+.lit{font-style:italic;color:var(--rose);cursor:pointer;display:inline-block;transition:text-shadow .5s,transform .5s;animation:breathe 6s ease-in-out infinite;animation-delay:var(--b,0s)}
+.lit:hover,.lit.pulse{text-shadow:0 0 16px rgba(168,68,95,.55);transform:scale(1.07)}
+@keyframes breathe{0%,100%{text-shadow:0 0 0 rgba(168,68,95,0)}50%{text-shadow:0 0 12px rgba(168,68,95,.35)}}
+.end{display:flex;flex-direction:column;align-items:center;gap:1em;margin-top:2.2em;color:var(--rose);opacity:0;transition:opacity 1.2s ease var(--d,0s)}
+.end.in{opacity:1}
+.end svg{width:4.4em}
+.done{font:inherit;font-family:var(--f-hand);font-size:1.35rem;color:var(--ink-soft);background:none;border:0;border-bottom:1px solid currentColor;padding:0 .1em;cursor:pointer}
+.done:hover{color:var(--rose)}
+
+.sheet.card{text-align:center;padding-block:clamp(54px,14vw,90px)}
+.sheet.card .hd{margin-bottom:2.4em}
+.sheet.card .p{font-size:clamp(20px,5.4vw,25px);font-style:italic;line-height:1.55;margin-bottom:1.1em}
+.sheet.card .p.last{font-size:clamp(25px,7vw,32px);color:var(--rose);margin-top:.5em}
+
+.eye path,.eye circle{fill:none;stroke:currentColor;stroke-width:1.5}
+.eye .pupil{fill:currentColor;stroke:none}
+.eye .lid{transform-origin:60px 30px;animation:blink 7s infinite}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.08)}}
+
+@media (prefers-reduced-motion:reduce){
+  .env,.flap,.peek,.sheet,.seal span{animation:none!important;transition:none!important}
+  .s,.end{opacity:1;filter:none;transition:none}
+  .lit,.eye .lid{animation:none}
+}
+</style>
+
+<canvas id="fx" aria-hidden="true"></canvas>
+<header class="top">
+  <p class="kick">cartas</p>
+  <h1>Qué lindos eran tus ojos</h1>
+  <p class="sub" id="sub">Tocá el sello para abrir la primera carta.</p>
+</header>
+<main class="desk" id="desk"></main>
+<div id="toast" role="status"></div>
+<div class="reader" id="reader" hidden role="dialog" aria-modal="true" aria-label="Carta">
+  <button class="back-btn" id="back" type="button">‹ volver a las cartas</button>
+  <div class="scroller" id="scroller"><article class="sheet" id="sheet"></article></div>
+</div>
+
+<script>
+(function(){
+  var EYE='<svg class="eye" viewBox="0 0 120 60" aria-hidden="true"><g class="lid"><path d="M4 30 Q60 -8 116 30 Q60 68 4 30Z"/><circle cx="60" cy="30" r="13"/><circle class="pupil" cx="60" cy="30" r="5"/></g></svg>';
+
+  var ITEMS=[
+    {n:'I',t:'Los ojos',lead:true,tone:['#d9cfd9','#c5b9c6'],tilt:-1.6,p:[
+      "Hay miradas que, por más que pase el tiempo, uno sigue recordando.",
+      "No sé bien qué tenés vos, pero siempre hubo algo que me llamó la atención. Capaz es tu pelo corto, que no sé por qué me gusta tanto, o tu cara, que podría quedarme mirando más tiempo del que admitiría. O capaz son tus ojos… no sé, tus ojos tienen algo que nunca supe explicar.",
+      "Desde el primer día me pasó algo con ellos. Hay ojos lindos, sí, pero los tuyos siempre fueron distintos para mí. Tenían algo que hacía que quisiera seguir mirándote, como si por un ratito pudiera olvidarme de todo lo demás.",
+      "Creo que nunca te dije de verdad lo mucho que me gustaban. Y no hablo solamente de lo lindos que son, sino de lo que me hacían sentir. Porque, de alguna manera, terminaron convirtiéndose en una de mis cosas favoritas de vos."]},
+    {n:'II',t:'Lo que no se dice',tone:['#cfd7de','#b9c3cc'],tilt:1.4,p:[
+      "También pienso mucho en vos y en todas esas cosas que quizás te guardás para vos misma. En los días en los que no estás bien, en las cosas que te duelen aunque no las cuentes y en todo eso que a veces una persona lleva adentro sin que los demás se den cuenta.",
+      "Muchas veces quise ayudarte. Quise que estuvieras bien, que pudieras hablar conmigo cuando algo te pasara y que supieras que no tenías que hacerte la fuerte todo el tiempo. No sé si alguna vez conseguí que te sintieras así, pero de verdad quería que supieras que podías estar mal conmigo y que eso no iba a hacer que te quisiera menos.",
+      "A veces uno quiere tanto a alguien que piensa que puede arreglarle todo lo que le duele. Yo también lo pensé. Con el tiempo entendí que querer ayudar no siempre significa saber cómo hacerlo, y que por más que tengas las mejores intenciones, a veces no encontrás las palabras ni la manera de hacer que las cosas duelan un poco menos.",
+      "Igual, me pone contento pensar que hoy quizás estés mejor. Que tengas días lindos, que te pasen cosas que te hagan sonreír de verdad y que, incluso cuando las cosas se compliquen, encuentres algo que te dé ganas de seguir adelante.",
+      "Y ojalá nunca te falten motivos para estar bien. No importa quién esté a tu lado ahora, ni quién sea esa persona que consiga hacerte reír cuando tenés un día de mierda. De corazón, espero que te cuide, que te haga bien y que te recuerde lo mucho que valés, incluso cuando vos misma te olvides.",
+      "Porque, aunque las cosas entre nosotros no hayan salido como quizás alguna vez imaginé, nunca quise que fueras infeliz. Ni siquiera ahora."]},
+    {n:'III',t:'Las noches',tone:['#d6d2e0','#c1bccf'],tilt:-1,echo:"Y vos fuiste eso para mí.",p:[
+      "Pero no te voy a mentir. Hay noches en las que me acuerdo de vos sin buscarlo. Me acuerdo de tu sonrisa, de tu pelo, de tus ojos. Y termino pensando en todo lo que vivimos, en lo que hablamos y también en todas esas cosas que me quedé con ganas de decirte.",
+      "A veces me imagino cómo sería volver a hablar con vos durante horas, de cualquier cosa, sin mirar el reloj. Poder estar cerca, reírnos por alguna boludez y sentir esa tranquilidad de no tener que pensar demasiado en qué decir. Simplemente estar ahí, compartiendo un rato, como si por un momento todo fuera más fácil.",
+      "Y no sé si a vos te pasa alguna vez, pero yo todavía me acuerdo de esos pequeños detalles que quizás para vos no significaron tanto. Porque hay cosas que para uno son un momento más y para el otro terminan siendo recuerdos a los que vuelve sin darse cuenta.",
+      "Supongo que hay personas que te marcan de una manera difícil de explicar. No necesariamente porque todo haya sido perfecto, ni porque uno quiera quedarse viviendo en el pasado. Simplemente porque, mientras estuvieron en tu vida, hubo algo que se sintió diferente."]},
+    {n:'IV',t:'Lo que quedó',tone:['#d7d4cf','#c3beb8'],tilt:1.8,p:[
+      "No quiero hacerte pensar que me debés algo, ni que tenés que mirar hacia atrás por todo lo que alguna vez sentí. Tampoco quiero que pienses que escribo esto para hacerte sentir mal o para recordarte lo que pudo haber sido. Si algo me gustaría que supieras, es que te quise de verdad, con mis errores, con mis miedos y con todas esas cosas que quizás no supe hacer bien.",
+      "Tal vez no fui la persona que necesitabas en ese momento. Tal vez hubo cosas que podría haber hecho distinto. No lo sé. Hay preguntas que probablemente nunca tengan una respuesta, y supongo que parte de crecer también es aprender a convivir con eso.",
+      "Pero hay algo que sí sé: me encantaban tus ojos, me encantaba tu pelo corto y me encantaba la forma en la que podía quedarme mirándote sin aburrirme nunca. Y, aunque suene simple, creo que eso dice bastante de lo que me pasaba con vos.",
+      "No sé qué va a pasar de acá en adelante. No sé si algún día vamos a volver a encontrarnos de la misma manera, si vamos a sentarnos a hablar como antes o si simplemente vamos a seguir con nuestras vidas, guardando cada uno sus propios recuerdos.",
+      "Pero a veces me gusta pensar que la vida todavía puede sorprendernos. Que quizás algún día nos crucemos, nos miremos y nos salga una sonrisa sin tener que explicar demasiado. Que podamos hablar de todo lo que pasó, de lo que cambió y de las personas en las que nos convertimos.",
+      "No digo que tenga que pasar. Ni siquiera sé si sería posible. Solamente me gusta pensar que no siempre sabemos cómo van a terminar las cosas, y que hay historias que, por más que parezcan haber llegado a su final, todavía pueden tener algo inesperado."]},
+    {n:'V',t:'Por ahora',tone:['#dccfd5','#c8b9c1'],tilt:-1.3,p:[
+      "Por ahora, de verdad espero que estés bien. Que te cuides, que seas feliz y que aprendas a tratarte con un poquito más de cariño. Que no sientas que tenés que poder con todo sola y que nunca te falte alguien con quien puedas ser vos misma, incluso en tus peores días.",
+      "Y si alguna vez volvés a pensar en mí, ojalá no te quedes solamente con las cosas que salieron mal. Ojalá también te acuerdes de que hubo alguien que disfrutaba escucharte, que se fijaba en los pequeños detalles y que podía quedarse mirándote a los ojos como si no existiera nada más alrededor.",
+      "Alguien que, con todo lo que sabía y también con todo lo que todavía le faltaba aprender, intentó quererte de la mejor manera que pudo.",
+      "No sé si algún día voy a volver a sentir exactamente lo mismo por alguien. Tampoco sé si eso importa demasiado.",
+      "Solo sé que, cuando pienso en vos, hay dos cosas que todavía se me vienen a la cabeza casi sin querer: tus ojos."]},
+    {n:'VI',t:'Al final',card:true,tone:['#e0d3da','#cdbcc6'],tilt:1.2,p:[
+      "Y qué querés que te diga… qué lindos eran tus ojos.",
+      "Qué linda eras vos.",
+      "Y qué fácil fue enamorarme de vos."]}
+  ];
+
+  var LIT=/(pelo corto|pelo|ojos|sonrisa|miradas|mirada)/gi, lb=0;
+  var desk=document.getElementById('desk'), reader=document.getElementById('reader'), scroller=document.getElementById('scroller');
+  var sheet=document.getElementById('sheet'), back=document.getElementById('back'), toast=document.getElementById('toast'), sub=document.getElementById('sub');
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var reads=[], envs=[], cur=-1, busy=false, io=null, tt=0;
+
+  /* sobres */
+  ITEMS.forEach(function(it,i){
+    var e=document.createElement('article');
+    e.className='env locked';
+    e.style.setProperty('--i',i);e.style.setProperty('--tilt',it.tilt+'deg');
+    e.style.setProperty('--tone',it.tone[0]);e.style.setProperty('--tone2',it.tone[1]);
+    e.innerHTML='<div class="body"><div class="back"></div><div class="peek"></div>'+
+      '<div class="front"></div><div class="post">'+EYE+'</div>'+
+      '<div class="label"><small>Carta '+it.n+'</small><b>'+it.t+'</b></div>'+
+      '<div class="flap"></div>'+
+      '<button class="seal" type="button" aria-label="Abrir carta '+it.n+': '+it.t+'"><span class="l"></span><span class="r"></span>'+EYE+'</button>'+
+      '<div class="stamp">leída</div></div>';
+    desk.appendChild(e);envs.push(e);
+    e.addEventListener('click',function(ev){
+      if(ev.target.closest('.seal')||ev.target.closest('.flap')||ev.target.closest('.front')||ev.target.closest('.peek')) openEnv(i);
+    });
+  });
+
+  function refresh(){
+    envs.forEach(function(e,i){
+      var un=(i===0)||reads[i-1];
+      e.classList.toggle('locked',!un);
+      e.classList.toggle('read',!!reads[i]);
+      e.classList.toggle('next',un&&!reads[i]);
+    });
+  }
+  refresh();
+
+  function say(msg){
+    toast.textContent=msg;toast.classList.add('show');
+    clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove('show')},2200);
+  }
+
+  function openEnv(i){
+    if(busy) return;
+    var e=envs[i];
+    if(e.classList.contains('locked')){
+      e.classList.remove('shake');void e.offsetWidth;e.classList.add('shake');
+      say('Primero leé la carta anterior');return;
+    }
+    busy=true;cur=i;sub.classList.add('off');
+    var fast=!!reads[i];
+    e.classList.add('cracked');
+    setTimeout(function(){e.classList.add('open')},fast?0:380);
+    setTimeout(function(){show(i)},reduce?0:(fast?900:1250));
+  }
+
+  /* lectura */
+  function sentences(text,step){
+    var parts=text.split(/(?<=[.!?…])\s+(?=[A-ZÁÉÍÓÚÑ¿¡])/);
+    return parts.map(function(s,k){
+      var html=s.replace(LIT,function(m){lb+=1.3;return '<b class="lit" style="--b:'+(lb%6).toFixed(1)+'s">'+m+'</b>';});
+      return '<span class="s" style="--d:'+(k*step).toFixed(2)+'s">'+html+'</span>';
+    }).join(' ');
+  }
+  function render(it){
+    var h='<div class="hd"><small>Carta '+it.n+'</small>'+(it.card?'':'<h2>'+it.t+'</h2>')+'</div>';
+    if(it.card){
+      it.p.forEach(function(t,k){
+        h+='<p class="p'+(k===it.p.length-1?' last':'')+'"><span class="s" style="--d:'+(0.8+k*2.2).toFixed(1)+'s">'+t+'</span></p>';
+      });
+      h+='<div class="end" style="--d:8s">'+EYE+'<button class="done" type="button" id="done">volver a las cartas</button></div>';
+    }else{
+      it.p.forEach(function(t,k){
+        h+='<p class="p'+(it.lead&&k===0?' lead':'')+'">'+sentences(t,0.35)+'</p>';
+      });
+      if(it.echo) h+='<p class="echo"><span class="s">'+it.echo+'</span></p>';
+      h+='<div class="end">'+EYE+'<button class="done" type="button" id="done">guardar la carta</button></div>';
+    }
+    return h;
+  }
+  function observe(){
+    if(io) io.disconnect();
+    var all=sheet.querySelectorAll('.s,.end');
+    if(reduce||!('IntersectionObserver' in window)){
+      all.forEach(function(x){x.classList.add('in')});reads[cur]=true;return;
+    }
+    io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting) return;
+        e.target.classList.add('in');io.unobserve(e.target);
+        if(e.target.classList.contains('end')) reads[cur]=true;
+      });
+    },{root:scroller,threshold:0.4});
+    all.forEach(function(x){io.observe(x)});
+  }
+  function show(i){
+    sheet.className='sheet'+(ITEMS[i].card?' card':'');
+    sheet.innerHTML=render(ITEMS[i]);
+    reader.hidden=false;scroller.scrollTop=0;
+    document.documentElement.style.overflow='hidden';
+    requestAnimationFrame(function(){requestAnimationFrame(function(){
+      reader.classList.add('show');observe();back.focus({preventScroll:true});
+    })});
+    fx.mood=.4;
+  }
+  function closeReader(){
+    if(cur<0||!reader.classList.contains('show')) return;
+    var i=cur,e=envs[i],done=!!reads[i];
+    reader.classList.remove('show');
+    setTimeout(function(){
+      reader.hidden=true;document.documentElement.style.overflow='';
+      if(io) io.disconnect();
+      e.classList.remove('open');
+      setTimeout(function(){
+        if(!done) e.classList.remove('cracked');
+        refresh();busy=false;cur=-1;
+        fx.mood=(reads[ITEMS.length-1])?1.9:1;
+        var seal=e.querySelector('.seal');
+        if(done&&i<envs.length-1){
+          envs[i+1].scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
+          say('Se abrió la siguiente');
+        }else if(!done&&seal){seal.focus({preventScroll:true});}
+      },reduce?0:600);
+    },reduce?0:500);
+  }
+  back.addEventListener('click',closeReader);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape') closeReader();});
+  sheet.addEventListener('click',function(e){
+    var lit=e.target.closest&&e.target.closest('.lit');
+    if(lit){lit.classList.add('pulse');setTimeout(function(){lit.classList.remove('pulse')},1400);fx.burst(e.clientX,e.clientY);return;}
+    if(e.target.closest&&e.target.closest('#done')) closeReader();
+  });
+
+  /* luciérnagas */
+  var cv=document.getElementById('fx'), cx=cv.getContext('2d'), W=0,H=0, motes=[], sparks=[];
+  var fx={mood:1,level:1,burst:function(x,y){
+    for(var i=0;i<16;i++){var a=Math.random()*6.283,s=.5+Math.random()*1.8;
+      sparks.push({x:x,y:y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-.7,life:1,r:1+Math.random()*2});}
+    if(reduce&&!ticking) frame();
+  }};
+  var ticking=false;
+  function size(){
+    var d=Math.min(window.devicePixelRatio||1,2);
+    W=window.innerWidth;H=window.innerHeight;
+    cv.width=W*d;cv.height=H*d;cx.setTransform(d,0,0,d,0,0);
+    if(!motes.length){
+      var n=W<600?28:46;
+      for(var i=0;i<n;i++) motes.push({x:Math.random()*W,y:Math.random()*H,r:1+Math.random()*2.4,vy:.08+Math.random()*.25,vx:(Math.random()-.5)*.15,ph:Math.random()*6.28,sp:.008+Math.random()*.014});
+    }
+  }
+  function dot(x,y,r,a,rgb){
+    var g=cx.createRadialGradient(x,y,0,x,y,r*7);
+    g.addColorStop(0,'rgba('+rgb+','+a+')');g.addColorStop(1,'rgba('+rgb+',0)');
+    cx.fillStyle=g;cx.beginPath();cx.arc(x,y,r*7,0,6.283);cx.fill();
+  }
+  function frame(){
+    ticking=true;
+    cx.clearRect(0,0,W,H);
+    fx.level+=(fx.mood-fx.level)*0.03;
+    var L=fx.level;
+    for(var i=0;i<motes.length;i++){
+      var m=motes[i];
+      if(!reduce){m.y-=m.vy*L;m.x+=m.vx+Math.sin(m.ph)*.12;m.ph+=m.sp;}
+      if(m.y<-20){m.y=H+20;m.x=Math.random()*W;}
+      if(m.x<-20)m.x=W+20; if(m.x>W+20)m.x=-20;
+      dot(m.x,m.y,m.r,Math.max((.14+.16*Math.sin(m.ph*3))*L,0),i%5===0?'216,120,150':'232,183,143');
+    }
+    for(var j=sparks.length-1;j>=0;j--){
+      var s=sparks[j];s.x+=s.vx;s.y+=s.vy;s.vy+=.012;s.life-=.012;
+      if(s.life<=0){sparks.splice(j,1);continue;}
+      dot(s.x,s.y,s.r,s.life*.8,'232,183,143');
+    }
+    if(!reduce||sparks.length) requestAnimationFrame(frame); else ticking=false;
+  }
+  size();
+  window.addEventListener('resize',size);
+  frame();
+})();
+</script>
+
+</body></html>
